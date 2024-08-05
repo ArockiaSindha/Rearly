@@ -1,6 +1,8 @@
-import React from "react";
-import { View, Text, Image, TouchableOpacity, TextInput, FlatList, StatusBar } from "react-native";
+import React, { useState } from "react";
+import { View, Text, Image, TouchableOpacity, TextInput, FlatList } from "react-native";
 import { ListingScreenstyle } from "./ListingScreenstyle";
+import { Appbar, Menu } from 'react-native-paper';
+import { useNavigation,NavigationProp } from '@react-navigation/native';
 
 const listings = [
   {
@@ -38,13 +40,44 @@ const listings = [
 ];
 
 const ListingScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
+  const [menuVisible, setMenuVisible] = useState(false);
+
+  const handleMoreInfoPress = () => {
+    navigation.navigate('AnimalOVscreen');
+  };
+   
+  const openMenu = () => setMenuVisible(true);
+  const closeMenu = () => setMenuVisible(false);
+
+  const handleCreateNewAnimalPress = () => {
+    navigation.navigate('CreateNA'); 
+    closeMenu();
+  };
+  const handleGradingScreenPress = () => {
+    navigation.navigate('GradingSrc'); 
+    closeMenu();
+  };
+
   return (
     <View style={ListingScreenstyle.container}>
-      <StatusBar barStyle='light-content' />
-      <View style={ListingScreenstyle.header}>
-           
-        <Text style={ListingScreenstyle.headerTitle}>Listings</Text>
-      </View>
+      <Appbar.Header style={{backgroundColor:'rgba(255, 255, 255, 1)'}}>
+    <Appbar.BackAction onPress={() =>navigation.goBack()} color='#000000' />
+    <Appbar.Content
+      title="Listings"
+      titleStyle={{ fontFamily: 'DMSans_24pt-Medium', fontSize: 24, color:'#000000' }}
+    />
+    <Menu
+       visible={menuVisible}
+       onDismiss={closeMenu}
+       anchor={<Appbar.Action icon="dots-vertical" color="#000000" onPress={openMenu} />}
+       contentStyle={{backgroundColor:'rgba(255, 255, 255, 1)'}}
+       >
+        <Menu.Item onPress={handleCreateNewAnimalPress} title="Create New Animal" titleStyle={{color:'#000000'}} />
+        <Menu.Item onPress={handleGradingScreenPress} title="Grading Screen" titleStyle={{color:'#000000'}} />
+        <Menu.Item onPress={() => {}} title="Transactions" titleStyle={{color:'#000000'}} />
+    </Menu>
+  </Appbar.Header>
       <View style={ListingScreenstyle.searchSection}>
         <Image
           source={require('../../assets/Images/Search.png')}
@@ -81,8 +114,11 @@ const ListingScreen = () => {
                   <Text style={ListingScreenstyle.buttonText}>Buy Now</Text>
                 </TouchableOpacity>
                 <View style={ListingScreenstyle.MIB}>
-                  <TouchableOpacity style={ListingScreenstyle.moreInfoButton}>
-                    <Text style={ListingScreenstyle.MIB}>More Info</Text>
+                  <TouchableOpacity 
+                  style={ListingScreenstyle.moreInfoButton}
+                  onPress={handleMoreInfoPress}
+                  >
+                  <Text style={ListingScreenstyle.MIB}>More Info</Text>
                   </TouchableOpacity>
                 </View>
               </View>

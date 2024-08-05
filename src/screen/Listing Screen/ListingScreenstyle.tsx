@@ -5,21 +5,6 @@ export const ListingScreenstyle = StyleSheet.create({
         flex: 1,
         backgroundColor: '#F9F9F9',
       },
-      header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 16,
-        backgroundColor: '#f8f8f8',
-      },
-      headerTitle: {
-        flex: 1,
-        textAlign: 'left',
-        fontSize: 24,
-        //fontWeight: 'bold',
-        fontFamily:'DMSans_24pt-Black',
-        color: 'rgba(0, 0, 0, 1)',
-      },
       searchSection: {
         flexDirection: 'row',
         alignItems: 'center',
